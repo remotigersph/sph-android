@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">SPH</string>
+    <string name="google_services_api_key">AIzaSyC2GrNSVgzxMnAgvCrqD_B1kQCh_LVbZ-M</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="drawer_open">open</string>
+    <string name="drawer_close">closed</string>
+
+    <!-- Navigation Drawer Menu -->
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+</resources>

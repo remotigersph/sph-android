@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    tools:context="pogi.tiger.com.sph.view.activity.MainActivity">
+    <data>
+        <variable name="viewModel" type="pogi.tiger.com.sph.viewmodel.NavigationDrawerViewModel"/>
+    </data>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary">
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/user_photo"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@android:color/darker_gray"
+        binding:imageUri="@{viewModel.user.photoUri}"
+        android:scaleType="centerCrop"
+        android:padding="@dimen/padding_user_photo"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        app:riv_oval="true"
+        app:riv_border_color="@android:color/darker_gray"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@{viewModel.user.username}"
+        android:layout_toRightOf="@id/user_photo"
+        android:layout_toLeftOf="@id/post_options"
+        android:layout_centerVertical="true"
+        android:textStyle="bold"/>
+</RelativeLayout>
+</layout>
