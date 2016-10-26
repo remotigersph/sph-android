@@ -1,4 +1,4 @@
-# sph-android
+# sph android
 A media sharing app that uses [Data Binding](https://developer.android.com/topic/libraries/data-binding/index.html) + [MVVM](https://labs.ribot.co.uk/approaching-android-with-mvvm-8ceec02d5442#.gcmezpeai) design pattern.
 
 ### Libraries used
