@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "1099409742468",
-    "firebase_url": "https://fir-ph.firebaseio.com",
-    "project_id": "fir-ph",
-    "storage_bucket": "fir-ph.appspot.com"
+    "project_number": "877128386163",
+    "firebase_url": "https://fir-ph-6976c.firebaseio.com",
+    "project_id": "fir-ph-6976c",
+    "storage_bucket": "fir-ph-6976c.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1099409742468:android:06d81932ff0a40f5",
+        "mobilesdk_app_id": "1:877128386163:android:06d81932ff0a40f5",
         "android_client_info": {
           "package_name": "pogi.tiger.com.sph"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1099409742468-iu3kaakhqeti10oavohkd2sdg19e5c5u.apps.googleusercontent.com",
+          "client_id": "877128386163-up03df9uog47u7f9n42h8l6t7fohpaf3.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCKumF-zd4di7upK2pZfv3dYmNPb661D9E"
+          "current_key": "AIzaSyBD95InyW1tLH4M9VPoNBUI252nOxlBAoc"
         }
       ],
       "services": {

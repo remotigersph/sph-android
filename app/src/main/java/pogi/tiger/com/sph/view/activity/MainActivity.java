@@ -1,5 +1,6 @@
 package pogi.tiger.com.sph.view.activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,6 +19,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import pogi.tiger.com.sph.R;
 import pogi.tiger.com.sph.databinding.ActivityMainBinding;
@@ -45,9 +49,20 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private FirebaseAuth mAuth;
+    private FirebaseUser mUser;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mAuth = FirebaseAuth.getInstance();
+        mUser = mAuth.getCurrentUser();
+        if(mUser == null) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+
         ActivityMainBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         setContentView(R.layout.activity_main);
 
