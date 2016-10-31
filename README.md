@@ -15,4 +15,5 @@ A media sharing app that uses [Data Binding](https://developer.android.com/topic
 - [ ] Implement API connections using Retrofit 2 and RxAndroid
 - [ ] Add more Unit Test Cases
 - [ ] Add more Instrumented Test Cases
+- [x] Implement Circleci
 - [ ] Run with Firebase
