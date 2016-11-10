@@ -1,4 +1,4 @@
-package pogi.tiger.com.sph.viewmodel.post;
+package pogi.tiger.com.sph.viewmodel.fragment.post;
 
 import android.content.Context;
 import android.databinding.BaseObservable;
@@ -11,23 +11,22 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-
 import pogi.tiger.com.sph.R;
 import pogi.tiger.com.sph.model.Post;
+import pogi.tiger.com.sph.utils.ImageLoader;
 import pogi.tiger.com.sph.view.fragment.post.PostDetailFragment;
 
 /**
- * Created by Pogi on 26/09/2016.
+ * Created by Pogi on 04/11/2016.
  */
 
-public class PostViewModel extends BaseObservable {
+public class PostItemViewModel extends BaseObservable implements View.OnClickListener {
 
-//    Context context;
+    //    Context context;
     private final FragmentManager mFragmentManager;
     private Post post;
 
-    public PostViewModel(Post post, FragmentManager fragmentManager) {
+    public PostItemViewModel(Post post, FragmentManager fragmentManager) {
 //        this.context = context;
         this.post = post;
         this.mFragmentManager = fragmentManager;
@@ -40,7 +39,7 @@ public class PostViewModel extends BaseObservable {
 
     @Bindable
     public String getId() {
-        return post.id;
+        return post.key;
     }
 
     @Bindable
@@ -60,15 +59,11 @@ public class PostViewModel extends BaseObservable {
         WindowManager windowManager = (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
         windowManager.getDefaultDisplay().getMetrics(metrics);
         int calculatedWidth  = metrics.widthPixels/3;
-        Glide.with(view.getContext())
-                .load(imageUri)
-                .override(calculatedWidth, calculatedWidth)
-                .skipMemoryCache(true)
-                .centerCrop()
-                .into(view);
+        ImageLoader.load(view, imageUri, calculatedWidth,calculatedWidth);
     }
 
-    public void onItemClick(View view) {
+    @Override
+    public void onClick(View v) {
         PostDetailFragment fragment = PostDetailFragment.newInstance(post);
         FragmentTransaction transaction = mFragmentManager.beginTransaction();
         transaction.add(R.id.post_container, fragment)
@@ -76,3 +71,4 @@ public class PostViewModel extends BaseObservable {
                 .commit();
     }
 }
+

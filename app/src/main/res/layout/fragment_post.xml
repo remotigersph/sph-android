@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="pogi.tiger.com.sph.view.fragment.post.PostFragment">
+    <data>
+        <variable name="viewModel" type="pogi.tiger.com.sph.viewmodel.fragment.post.PostViewModel"/>
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/post_container">
+        <EditText
+            android:id="@+id/post_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+        <com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout
+            android:id="@+id/swipeRefreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/backgroundPrimary"
+            app:onRefreshListener="@{viewModel::onRefresh}"
+            >
+            <pogi.tiger.com.sph.component.ui.SPHRecyclerView
+                android:id="@+id/list"
+                android:name="pogi.tiger.com.sph.ui.fragment.PostFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/post_search"
+                app:layoutManager="android.support.v7.widget.GridLayoutManager"
+                app:spanCount="3"
+                app:adapter="@{viewModel.adapter}"
+                tools:listitem="@layout/fragment_post_item" />
+        </com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout>
+    </RelativeLayout>
+</layout>

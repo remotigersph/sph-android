@@ -31,6 +31,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    compile 'com.cleveroad:fireworkypulltorefresh:1.0.2'
     compile 'com.github.bumptech.glide:glide:3.5.2'
     compile 'com.makeramen:roundedimageview:2.2.1'
 
@@ -47,6 +48,9 @@ dependencies {
     // firebase dependencies
     compile 'com.google.android.gms:play-services:9.6.1'
     compile 'com.google.firebase:firebase-core:9.6.1'
+    compile 'com.google.firebase:firebase-storage:9.6.1'
+    compile 'com.google.firebase:firebase-database:9.6.1'
+    compile 'com.google.firebase:firebase-auth:9.6.1'
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'
     compile 'com.android.support:support-v4:24.2.1'

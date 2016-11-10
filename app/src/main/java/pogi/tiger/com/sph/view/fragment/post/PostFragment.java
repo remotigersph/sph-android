@@ -1,111 +1,99 @@
 package pogi.tiger.com.sph.view.fragment.post;
 
-import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import java.util.ArrayList;
+import java.util.List;
 import pogi.tiger.com.sph.R;
+import pogi.tiger.com.sph.databinding.FragmentPostBinding;
+import pogi.tiger.com.sph.databinding.FragmentPostItemBinding;
 import pogi.tiger.com.sph.model.Post;
-import pogi.tiger.com.sph.view.fragment.dummy.DummyContent;
+import pogi.tiger.com.sph.viewmodel.fragment.post.PostItemViewModel;
+import pogi.tiger.com.sph.viewmodel.fragment.post.PostViewModel;
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of posts.
  * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
  */
 public class PostFragment extends Fragment {
-
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    private int mColumnCount = 2;
-    private OnListFragmentInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
     public PostFragment() {
-    }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static PostFragment newInstance(int columnCount) {
-        PostFragment fragment = new PostFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_post_list, container, false);
 
-//        FragmentPostListBinding binding = DataBindingUtil.inflate(
-//                inflater, R.layout.fragment_post_list, container, false);
-//        binding.setViewModel(new PostDetailViewModel(post, getContext()));
-//        return binding.getRoot();
+         FragmentPostBinding binding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_post, container, false);
 
-        // Set the adapter
-        Context context = view.getContext();
-        RecyclerView recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        if (mColumnCount <= 1) {
-            recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        } else {
-            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-        }
-        recyclerView.setAdapter(new PostRecyclerViewAdapter(DummyContent.ITEMS, getChildFragmentManager()));
-        return view;
-    }
-
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-//        if (context instanceof OnListFragmentInteractionListener) {
-//            mListener = (OnListFragmentInteractionListener) context;
-//        } else {
-//            throw new RuntimeException(context.toString()
-//                    + " must implement OnListFragmentInteractionListener");
-//        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
+        binding.setViewModel(new PostViewModel(getChildFragmentManager(), binding.getRoot()));
+        return binding.getRoot();
     }
 
     /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
+     * {@link RecyclerView.Adapter} that can display a {@link Post}
      */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(Post item);
+    public static class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerViewAdapter.ViewHolder> {
+
+        private final List<Post> mValues;
+        private final FragmentManager mFragmentManager;
+
+        public PostRecyclerViewAdapter(FragmentManager fragmentManager) {
+            mValues = new ArrayList<>();
+            mFragmentManager = fragmentManager;
+        }
+
+        @Override
+        public PostRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            FragmentPostItemBinding binding = DataBindingUtil.inflate(
+                    LayoutInflater.from(parent.getContext()), R.layout.fragment_post_item, parent, false);
+            return new ViewHolder(binding);
+        }
+
+        @Override
+        public void onBindViewHolder(final PostRecyclerViewAdapter.ViewHolder holder, int position) {
+            holder.getBinding().setViewModel(new PostItemViewModel(mValues.get(position), mFragmentManager));
+        }
+
+        @Override
+        public int getItemCount() {
+            return mValues.size();
+        }
+
+        public class ViewHolder extends RecyclerView.ViewHolder {
+            public final FragmentPostItemBinding mBinding;
+
+            public ViewHolder(FragmentPostItemBinding binding) {
+                super(binding.getRoot());
+                mBinding = binding;
+            }
+
+            public FragmentPostItemBinding getBinding() {
+                return mBinding;
+            }
+        }
+
+        public void resetValues(List<Post> newList) {
+            mValues.clear();
+            mValues.addAll(newList);
+        }
     }
 }

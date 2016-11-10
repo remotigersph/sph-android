@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 
 import pogi.tiger.com.sph.model.User;
+import pogi.tiger.com.sph.utils.ImageLoader;
 
 /**
  * Created by Pogi on 04/10/2016.
@@ -26,10 +27,6 @@ public class NavigationDrawerViewModel extends BaseObservable {
 
     @BindingAdapter({"imageUri"})
     public static void loadImage(ImageView view, String imageUri) {
-        Glide.with(view.getContext())
-                .load(imageUri)
-                .fitCenter()
-                .crossFade()
-                .into(view);
+        ImageLoader.load(view, imageUri);
     }
 }

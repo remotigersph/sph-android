@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import pogi.tiger.com.sph.R;
 import pogi.tiger.com.sph.databinding.FragmentPostDetailBinding;
 import pogi.tiger.com.sph.model.Post;
-import pogi.tiger.com.sph.viewmodel.post.PostDetailViewModel;
+import pogi.tiger.com.sph.viewmodel.fragment.post.PostDetailViewModel;
 
 /**
  * A simple {@link Fragment} subclass.

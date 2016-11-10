@@ -5,7 +5,7 @@
     xmlns:binding="http://schemas.android.com/apk/res-auto"
     tools:context="pogi.tiger.com.sph.view.fragment.post.PostDetailFragment">
     <data>
-        <variable name="viewModel" type="pogi.tiger.com.sph.viewmodel.post.PostDetailViewModel"/>
+        <variable name="viewModel" type="pogi.tiger.com.sph.viewmodel.fragment.post.PostDetailViewModel"/>
     </data>
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,7 +22,7 @@
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:src="@android:color/darker_gray"
-                binding:imageUri="@{viewModel.user.photoUri}"
+                binding:imageUri="@{viewModel.userPhotoUri}"
                 android:scaleType="centerCrop"
                 android:padding="@dimen/padding_user_photo"
                 android:layout_alignParentLeft="true"
@@ -39,7 +39,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.user.username}"
+                android:text="@{viewModel.username}"
                 android:layout_toRightOf="@id/user_photo"
                 android:layout_toLeftOf="@id/post_options"
                 android:layout_centerVertical="true"

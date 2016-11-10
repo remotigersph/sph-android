@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import pogi.tiger.com.sph.model.Post;
+import pogi.tiger.com.sph.model.User;
 
 /**
  * Created by Pogi on 02/10/2016.
@@ -21,9 +22,10 @@ public class FakePostGenerator {
     }
 
     public static Post generatePost(int id) {
-        Post post = new Post(String.valueOf(id), "this is post #" + id);
-        post.photoUri = generatePhotoUri();
-        post.user = FakeUserGenerator.generateUser();
+        User generatedUser = FakeUserGenerator.generateUser();
+        Post post = new Post(String.valueOf(id), generatePhotoUri(), "this is post #" + id);
+        post.key = String.valueOf(id);
+        post.author = generatedUser.toString();
         post.votes =(long)(Math.random() * 100 + 1);
         return post;
     }

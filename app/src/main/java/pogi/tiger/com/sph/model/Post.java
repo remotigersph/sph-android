@@ -1,28 +1,50 @@
 package pogi.tiger.com.sph.model;
 
+import com.google.firebase.database.Exclude;
+import com.google.firebase.database.IgnoreExtraProperties;
+import com.google.firebase.database.ServerValue;
+
 import java.io.Serializable;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Pogi on 26/09/2016.
  */
 
+@IgnoreExtraProperties
 public class Post implements Serializable {
 
-    public final String id;
+    public String key;
+    public String userId;
+    public String author;
     public String photoUri;
     public String content;
+    public long createdAt;
     public long votes;
     public boolean isVotedByUser;
 
-    public User user;
+    public Post() {
+        // Default constructor required for calls to DataSnapshot.getValue(Post.class)
+    }
 
-    public Post(String id, String content) {
-        this.id = id;
+    public Post(String userId, String photoUri, String content) {
+        this.userId = userId;
+        this.photoUri = photoUri;
         this.content = content;
     }
 
-    @Override
-    public String toString() {
-        return content;
+    @Exclude
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("userId", userId);
+        result.put("author", author);
+        result.put("photoUri", photoUri);
+        result.put("content", content);
+        result.put("createdAt", ServerValue.TIMESTAMP);
+        result.put("votes", votes);
+        result.put("isVotedByUser", isVotedByUser);
+
+        return result;
     }
 }

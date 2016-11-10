@@ -1,4 +1,4 @@
-package pogi.tiger.com.sph.viewmodel.map;
+package pogi.tiger.com.sph.viewmodel.fragment.map;
 
 import android.databinding.BaseObservable;
 
