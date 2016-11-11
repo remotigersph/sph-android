@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="pogi.tiger.com.sph.view.activity.MainActivity">
     <data>
+        <variable name="viewModel" type="pogi.tiger.com.sph.viewmodel.activity.MainActivityViewModel"/>
     </data>
     <android.support.v4.widget.DrawerLayout
         android:id="@+id/drawer_layout"
@@ -11,7 +12,8 @@
         android:layout_height="match_parent"
         android:clickable="true"
         android:focusableInTouchMode="true"
-        android:fitsSystemWindows="true">
+        android:fitsSystemWindows="true"
+        app:addDrawerListener="@{viewModel.actionBarDrawerToggle}">
         <android.support.design.widget.CoordinatorLayout
             android:id="@+id/main_content"
             android:layout_width="match_parent"
@@ -39,7 +41,7 @@
                     android:id="@+id/tabs"
                     style="@style/AppTabLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"/>
 
             </android.support.design.widget.AppBarLayout>
 
@@ -47,6 +49,7 @@
                 android:id="@+id/container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:adapter="@{viewModel.adapter}"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
             <android.support.design.widget.FloatingActionButton
@@ -55,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
                 android:layout_margin="@dimen/fab_margin"
+                android:onClick="@{viewModel::showCreatePostActionChooser}"
                 app:srcCompat="@drawable/ic_add_white" />
 
         </android.support.design.widget.CoordinatorLayout>
@@ -67,6 +71,7 @@
             android:background="@android:color/white"
             app:headerLayout="@layout/navigation_header"
             app:menu="@menu/drawer"
+            app:navigationItemSelectedListener="@{viewModel::onNavigationItemSelected}"
             android:fitsSystemWindows="false"/>
     </android.support.v4.widget.DrawerLayout>
 </layout>

@@ -35,7 +35,7 @@ public abstract class SPHActivity extends AppCompatActivity {
         initializeFirebase();
     }
 
-    private void initializeFirebase() {
+    protected void initializeFirebase() {
 
         mAuth = FirebaseAuth.getInstance();
 

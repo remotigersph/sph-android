@@ -22,7 +22,7 @@
             android:background="@color/backgroundPrimary"
             app:onRefreshListener="@{viewModel::onRefresh}"
             >
-            <pogi.tiger.com.sph.component.ui.SPHRecyclerView
+            <android.support.v7.widget.RecyclerView
                 android:id="@+id/list"
                 android:name="pogi.tiger.com.sph.ui.fragment.PostFragment"
                 android:layout_width="match_parent"

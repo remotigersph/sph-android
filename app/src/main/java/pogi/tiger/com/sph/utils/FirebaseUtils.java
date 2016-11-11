@@ -78,6 +78,12 @@ public class FirebaseUtils {
         return query;
     }
 
+    public static Query generateCategoriesQuery() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        Query query = mDatabase.child("categories").orderByKey();
+        return query;
+    }
+
     public static StorageReference createStorageReferenceFromUrl(String url) {
         StorageReference reference = null;
         try {
