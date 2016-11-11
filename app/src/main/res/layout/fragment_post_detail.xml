@@ -7,6 +7,10 @@
     <data>
         <variable name="viewModel" type="pogi.tiger.com.sph.viewmodel.fragment.post.PostDetailViewModel"/>
     </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -83,4 +87,5 @@
             android:layout_margin="@dimen/widget_margin"
             android:text="@{viewModel.content}" />
     </LinearLayout>
+    </ScrollView>
 </layout>
