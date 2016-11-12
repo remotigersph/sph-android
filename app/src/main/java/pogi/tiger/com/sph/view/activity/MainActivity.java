@@ -221,6 +221,12 @@ public class MainActivity extends SPHActivity {
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+        viewModel.destroy();
+    }
+
+    @Override
     public void onBackPressed() {
         Fragment fragment = viewModel.mSectionsPagerAdapter.getItem(
                 viewModel.mViewPager.getCurrentItem());

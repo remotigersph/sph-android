@@ -42,6 +42,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import pogi.tiger.com.sph.R;
+import pogi.tiger.com.sph.utils.FirebaseUtils;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -200,8 +201,10 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Register account failed: " + task.getException().getMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }
+                        else {
+                            FirebaseUtils.createNewUser();
+                        }
                         showProgress(false);
-                        // ...
                     }
                 });
     }

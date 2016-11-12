@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import pogi.tiger.com.sph.model.Post;
+import pogi.tiger.com.sph.model.User;
 
 /**
  * Created by Pogi on 01/11/2016.
@@ -33,6 +34,12 @@ public class FirebaseUtils {
     private static final String FIREBASE_DATABASE_REFERENCE_URL = "https://fir-ph-6976c.firebaseio.com/";
 
     private static final int MAX_POST = 100;
+
+    public static void createNewUser() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        User user = FakeUserGenerator.generateUser();
+        mDatabase.child("user").child(getUserId()).setValue(user.toMap());
+    }
 
     public static UploadTask createUploadTask(Uri uri) {
         FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -70,6 +77,11 @@ public class FirebaseUtils {
         mDatabase.updateChildren(childUpdates);
     }
 
+    public static DatabaseReference createCurrentUserReference() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        return database.getReference("user/" + getUserId());
+    }
+
     public static Query generateTopPostQuery() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         Query query = mDatabase.child("posts")
@@ -101,7 +113,7 @@ public class FirebaseUtils {
         childUpdates.put("/posts/" + post.key + "/votes", post.votes);
         childUpdates.put("/posts-" + post.category + "/" + post.key + "/votes", post.votes);
         childUpdates.put("/posts-user/" + getUserId() + "/" + post.key + "/votes", post.votes);
-
+        childUpdates.put("/user/" + getUserId() + "/votes/" + post.key, true);
         mDatabase.updateChildren(childUpdates);
     }
 

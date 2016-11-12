@@ -48,9 +48,12 @@ public class Post implements Serializable {
         result.put("longitude", longitude);
         result.put("createdAt", ServerValue.TIMESTAMP);
         result.put("votes", votes);
-        result.put("isVotedByUser", isVotedByUser);
         result.put("category", category);
 
         return result;
+    }
+
+    public void updateIfVotedByUser(User user) {
+        isVotedByUser = user.votes.containsKey(key);
     }
 }

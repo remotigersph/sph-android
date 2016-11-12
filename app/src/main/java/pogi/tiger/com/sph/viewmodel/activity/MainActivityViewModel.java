@@ -19,13 +19,18 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import pogi.tiger.com.sph.R;
+import pogi.tiger.com.sph.SPHApplication;
+import pogi.tiger.com.sph.component.SPHActivity;
 import pogi.tiger.com.sph.databinding.NavigationHeaderBinding;
 import pogi.tiger.com.sph.model.Category;
+import pogi.tiger.com.sph.model.User;
 import pogi.tiger.com.sph.utils.FakeUserGenerator;
 import pogi.tiger.com.sph.utils.FirebaseUtils;
+import pogi.tiger.com.sph.utils.SharedPreferenceUtils;
 import pogi.tiger.com.sph.view.activity.MainActivity;
 import pogi.tiger.com.sph.view.dialog.ActionChooserDialogFragment;
 import pogi.tiger.com.sph.viewmodel.NavigationDrawerViewModel;
@@ -45,6 +50,9 @@ public class MainActivityViewModel extends BaseObservable implements NavigationV
     TabLayout tabLayout;
     AppCompatActivity mActivity;
     ActionBarDrawerToggle actionBarDrawerToggle;
+
+    DatabaseReference currentUserReference;
+    ValueEventListener currentUserValueEventListener;
 
     public MainActivityViewModel(AppCompatActivity activity, View parent) {
         this.fragmentManager = activity.getSupportFragmentManager();
@@ -77,12 +85,28 @@ public class MainActivityViewModel extends BaseObservable implements NavigationV
             }
         };
         navigationView = (NavigationView) parent.findViewById(R.id.navigation_view);
+
+        currentUserReference = FirebaseUtils.createCurrentUserReference();
+        currentUserValueEventListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+                SharedPreferenceUtils.setUser(user, mActivity);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        };
+
         NavigationHeaderBinding headerBinding = DataBindingUtil.bind(navigationView.getHeaderView(0));
         headerBinding.setViewModel(new NavigationDrawerViewModel(FakeUserGenerator.generateUser()));
         init();
     }
 
     public void init() {
+        currentUserReference.addValueEventListener(currentUserValueEventListener);
         FirebaseUtils.generateCategoriesQuery().addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -99,6 +123,10 @@ public class MainActivityViewModel extends BaseObservable implements NavigationV
 
             }
         });
+    }
+
+    public void destroy() {
+        currentUserReference.removeEventListener(currentUserValueEventListener);
     }
 
     public MainActivity.SectionsPagerAdapter getAdapter() {

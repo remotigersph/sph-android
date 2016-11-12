@@ -13,10 +13,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.ValueEventListener;
 
 import pogi.tiger.com.sph.BR;
+import pogi.tiger.com.sph.SPHApplication;
 import pogi.tiger.com.sph.model.Post;
+import pogi.tiger.com.sph.model.User;
 import pogi.tiger.com.sph.utils.FakeUserGenerator;
 import pogi.tiger.com.sph.utils.FirebaseUtils;
 import pogi.tiger.com.sph.utils.ImageLoader;
+import pogi.tiger.com.sph.utils.SharedPreferenceUtils;
 
 /**
  * Created by Pogi on 26/09/2016.
@@ -45,6 +48,10 @@ public class PostDetailViewModel extends BaseObservable {
     public void init() {
         if(post != null && postReference == null) {
             postReference = FirebaseUtils.createPostVotesReference(post);
+            User currentUser = SharedPreferenceUtils.getUser(context);
+            if(currentUser != null) {
+                post.updateIfVotedByUser(currentUser);
+            }
         }
         if(valueEventListener == null) {
             valueEventListener = new ValueEventListener() {
