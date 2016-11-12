@@ -37,13 +37,14 @@ import pogi.tiger.com.sph.model.Category;
 import pogi.tiger.com.sph.utils.FakeUserGenerator;
 import pogi.tiger.com.sph.utils.FirebaseUtils;
 import pogi.tiger.com.sph.view.dialog.ActionChooserDialogFragment;
+import pogi.tiger.com.sph.view.fragment.NotificationFragment;
 import pogi.tiger.com.sph.view.fragment.map.MapFragment;
 import pogi.tiger.com.sph.view.fragment.post.PostFragment;
 import pogi.tiger.com.sph.view.fragment.WallFragment;
 import pogi.tiger.com.sph.viewmodel.NavigationDrawerViewModel;
 import pogi.tiger.com.sph.viewmodel.activity.MainActivityViewModel;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends SPHActivity {
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -102,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        viewModel.init();
+//        viewModel.init();
 //        FirebaseUtils.generateCategoriesQuery().addListenerForSingleValueEvent(new ValueEventListener() {
 //            @Override
 //            public void onDataChange(DataSnapshot dataSnapshot) {
@@ -161,10 +162,10 @@ public class MainActivity extends AppCompatActivity {
 
         Fragment mapFragment, postFragment, notificationFragment, wallFragment;
 
-        private final int PAGER_TOTAL_COUNT        = 2;
-        private final int PAGER_INDEX_MAP          = 0;
-        private final int PAGER_INDEX_POST         = 1;
-//        private final int PAGER_INDEX_NOTIFICATION = 2;
+        private final int PAGER_TOTAL_COUNT        = 3;
+//        private final int PAGER_INDEX_MAP          = 0;
+        private final int PAGER_INDEX_POST         = 0;
+        private final int PAGER_INDEX_NOTIFICATION = 1;
         private final int PAGER_INDEX_WALL         = 2;
 
         public SectionsPagerAdapter(FragmentManager fm) {
@@ -174,26 +175,26 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             switch (position) {
-                case PAGER_INDEX_MAP:
-                    if(mapFragment == null) {
-                        mapFragment = new MapFragment();
-                    }
-                    return mapFragment;
+//                case PAGER_INDEX_MAP:
+//                    if(mapFragment == null) {
+//                        mapFragment = new MapFragment();
+//                    }
+//                    return mapFragment;
                 case PAGER_INDEX_POST:
                     if(postFragment == null) {
                         postFragment = new PostFragment();
                     }
                     return postFragment;
-//                case PAGER_INDEX_NOTIFICATION:
-//                    if(notificationFragment == null) {
-//                        notificationFragment = NotificationFragment.newInstance("one", "two");
-//                    }
-//                    return notificationFragment;
-//                case PAGER_INDEX_WALL:
-//                    if(wallFragment == null) {
-//                        wallFragment = WallFragment.newInstance("one", "two");
-//                    }
-//                    return wallFragment;
+                case PAGER_INDEX_NOTIFICATION:
+                    if(notificationFragment == null) {
+                        notificationFragment = NotificationFragment.newInstance("one", "two");
+                    }
+                    return notificationFragment;
+                case PAGER_INDEX_WALL:
+                    if(wallFragment == null) {
+                        wallFragment = WallFragment.newInstance("one", "two");
+                    }
+                    return wallFragment;
             }
             return null;
         }
@@ -206,14 +207,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             switch (position) {
-                case PAGER_INDEX_MAP:
-                    return "Map";
+//                case PAGER_INDEX_MAP:
+//                    return "Map";
                 case PAGER_INDEX_POST:
                     return "Post";
-//                case PAGER_INDEX_NOTIFICATION:
-//                    return "Notification";
-//                case PAGER_INDEX_WALL:
-//                    return "Wall";
+                case PAGER_INDEX_NOTIFICATION:
+                    return "Notification";
+                case PAGER_INDEX_WALL:
+                    return "Wall";
             }
             return null;
         }

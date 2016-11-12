@@ -24,6 +24,7 @@ public class PostDetailFragment extends Fragment {
 
     // TODO: Rename and change types of parameters
     private Post post;
+    PostDetailViewModel viewModel;
 
     public PostDetailFragment() {
         // Required empty public constructor
@@ -58,7 +59,20 @@ public class PostDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         FragmentPostDetailBinding binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_post_detail, container, false);
-        binding.setViewModel(new PostDetailViewModel(post, getContext()));
+        viewModel = new PostDetailViewModel(post, getContext());
+        binding.setViewModel(viewModel);
         return binding.getRoot();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewModel.init();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        viewModel.destroy();
     }
 }

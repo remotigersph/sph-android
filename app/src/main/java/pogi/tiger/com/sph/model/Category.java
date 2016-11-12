@@ -30,4 +30,9 @@ public class Category implements Serializable {
 
         return result;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

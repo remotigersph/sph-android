@@ -29,4 +29,7 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+
+    <!-- Strings related to create post -->
+    <string name="category_prompt">Select category</string>
 </resources>

@@ -53,18 +53,19 @@ public class FirebaseUtils {
         return FirebaseAuth.getInstance().getCurrentUser().getUid();
     }
 
-    public static void writeNewPost(String photoUri, String content) {
+    public static void writeNewPost(Post post) {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Create new post at /user-posts/$userid/$postid and at
         // /posts/$postid simultaneously
         String key = mDatabase.child("posts").push().getKey();
-        Post post = new Post(getUserId(), photoUri, content);
+        post.userId = getUserId();
         Map<String, Object> postValues = post.toMap();
 
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/posts/" + key, postValues);
-        childUpdates.put("/user-posts/" + getUserId() + "/" + key, postValues);
+        childUpdates.put("/posts-" + post.category + "/" + key, postValues);
+        childUpdates.put("/posts-user/" + getUserId() + "/" + key, postValues);
 
         mDatabase.updateChildren(childUpdates);
     }
@@ -78,10 +79,35 @@ public class FirebaseUtils {
         return query;
     }
 
+    public static Query generateFreshPostQuery() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+        Query query = mDatabase.child("posts")
+                .limitToFirst(MAX_POST);
+
+        return query;
+    }
+
     public static Query generateCategoriesQuery() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
         Query query = mDatabase.child("categories").orderByKey();
         return query;
+    }
+
+    public static void upvotePost(Post post) {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        post.votes++;
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/posts/" + post.key + "/votes", post.votes);
+        childUpdates.put("/posts-" + post.category + "/" + post.key + "/votes", post.votes);
+        childUpdates.put("/posts-user/" + getUserId() + "/" + post.key + "/votes", post.votes);
+
+        mDatabase.updateChildren(childUpdates);
+    }
+
+    public static DatabaseReference createPostVotesReference(Post post) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        return database.getReference("posts/" + post.key + "/votes");
     }
 
     public static StorageReference createStorageReferenceFromUrl(String url) {

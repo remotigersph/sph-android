@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,52 +49,52 @@ public class PostFragment extends Fragment {
     }
 
     /**
-     * {@link RecyclerView.Adapter} that can display a {@link Post}
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
      */
-    public static class PostRecyclerViewAdapter extends RecyclerView.Adapter<PostRecyclerViewAdapter.ViewHolder> {
+    public static class PostPagerAdapter extends FragmentPagerAdapter {
 
-        private final List<Post> mValues;
-        private final FragmentManager mFragmentManager;
+        Fragment topPostFragment, freshPostFragment;
 
-        public PostRecyclerViewAdapter(FragmentManager fragmentManager) {
-            mValues = new ArrayList<>();
-            mFragmentManager = fragmentManager;
+        private final int PAGER_TOTAL_COUNT = 2;
+        private final int PAGER_INDEX_TOP   = 0;
+        private final int PAGER_INDEX_FRESH = 1;
+
+        public PostPagerAdapter(FragmentManager fm) {
+            super(fm);
         }
 
         @Override
-        public PostRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-
-            FragmentPostItemBinding binding = DataBindingUtil.inflate(
-                    LayoutInflater.from(parent.getContext()), R.layout.fragment_post_item, parent, false);
-            return new ViewHolder(binding);
-        }
-
-        @Override
-        public void onBindViewHolder(final PostRecyclerViewAdapter.ViewHolder holder, int position) {
-            holder.getBinding().setViewModel(new PostItemViewModel(mValues.get(position), mFragmentManager));
-        }
-
-        @Override
-        public int getItemCount() {
-            return mValues.size();
-        }
-
-        public class ViewHolder extends RecyclerView.ViewHolder {
-            public final FragmentPostItemBinding mBinding;
-
-            public ViewHolder(FragmentPostItemBinding binding) {
-                super(binding.getRoot());
-                mBinding = binding;
+        public Fragment getItem(int position) {
+            switch (position) {
+                case PAGER_INDEX_TOP:
+                    if(topPostFragment == null) {
+                        topPostFragment = PostListFragment.newInstance(PostListFragment.MODE_TOP);
+                    }
+                    return topPostFragment;
+                case PAGER_INDEX_FRESH:
+                    if(freshPostFragment == null) {
+                        freshPostFragment = PostListFragment.newInstance(PostListFragment.MODE_FRESH);
+                    }
+                    return freshPostFragment;
             }
-
-            public FragmentPostItemBinding getBinding() {
-                return mBinding;
-            }
+            return null;
         }
 
-        public void resetValues(List<Post> newList) {
-            mValues.clear();
-            mValues.addAll(newList);
+        @Override
+        public int getCount() {
+            return PAGER_TOTAL_COUNT;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            switch (position) {
+                case PAGER_INDEX_TOP:
+                    return "Top";
+                case PAGER_INDEX_FRESH:
+                    return "Fresh";
+            }
+            return null;
         }
     }
 }

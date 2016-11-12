@@ -7,9 +7,15 @@ import android.databinding.BindingAdapter;
 import android.view.View;
 import android.widget.ImageView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.ValueEventListener;
+
 import pogi.tiger.com.sph.BR;
 import pogi.tiger.com.sph.model.Post;
 import pogi.tiger.com.sph.utils.FakeUserGenerator;
+import pogi.tiger.com.sph.utils.FirebaseUtils;
 import pogi.tiger.com.sph.utils.ImageLoader;
 
 /**
@@ -21,6 +27,9 @@ public class PostDetailViewModel extends BaseObservable {
     private Post post;
     private Context context;
 
+    DatabaseReference postReference;
+    ValueEventListener valueEventListener;
+
     public PostDetailViewModel(Post post, Context context) {
         this.post = post;
         this.context = context;
@@ -29,6 +38,34 @@ public class PostDetailViewModel extends BaseObservable {
     public void setPost(Post post) {
         this.post = post;
         notifyChange();
+        postReference = FirebaseUtils.createPostVotesReference(post);
+        init();
+    }
+
+    public void init() {
+        if(post != null && postReference == null) {
+            postReference = FirebaseUtils.createPostVotesReference(post);
+        }
+        if(valueEventListener == null) {
+            valueEventListener = new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    post.votes = dataSnapshot.getValue(Integer.class);
+                    notifyPropertyChanged(BR.voteCount);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            };
+        }
+        postReference.addValueEventListener(valueEventListener);
+    }
+
+
+    public void destroy() {
+        postReference.removeEventListener(valueEventListener);
     }
 
     public String getPhotoUri() {
@@ -65,7 +102,7 @@ public class PostDetailViewModel extends BaseObservable {
     public void vote(View view) {
         if(!post.isVotedByUser) {
             post.isVotedByUser = true;
-            post.votes++;
+            FirebaseUtils.upvotePost(post);
             notifyPropertyChanged(BR.votedByUser);
             notifyPropertyChanged(BR.voteCount);
         }

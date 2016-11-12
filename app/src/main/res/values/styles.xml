@@ -13,8 +13,12 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="AppTabLayout" parent="Widget.Design.TabLayout">
+    <style name="AppTabLayoutPrimary" parent="Widget.Design.TabLayout">
         <item name="tabIndicatorColor">#fff</item>
+    </style>
+
+    <style name="AppTabLayoutSecondary" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@color/colorPrimary</item>
     </style>
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />

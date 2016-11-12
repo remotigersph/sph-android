@@ -79,6 +79,7 @@ public class MainActivityViewModel extends BaseObservable implements NavigationV
         navigationView = (NavigationView) parent.findViewById(R.id.navigation_view);
         NavigationHeaderBinding headerBinding = DataBindingUtil.bind(navigationView.getHeaderView(0));
         headerBinding.setViewModel(new NavigationDrawerViewModel(FakeUserGenerator.generateUser()));
+        init();
     }
 
     public void init() {

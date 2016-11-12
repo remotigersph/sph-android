@@ -20,9 +20,12 @@ public class Post implements Serializable {
     public String author;
     public String photoUri;
     public String content;
+    public double latitude, longitude;
     public long createdAt;
     public long votes;
     public boolean isVotedByUser;
+
+    public String category;
 
     public Post() {
         // Default constructor required for calls to DataSnapshot.getValue(Post.class)
@@ -41,9 +44,12 @@ public class Post implements Serializable {
         result.put("author", author);
         result.put("photoUri", photoUri);
         result.put("content", content);
+        result.put("latitude", latitude);
+        result.put("longitude", longitude);
         result.put("createdAt", ServerValue.TIMESTAMP);
         result.put("votes", votes);
         result.put("isVotedByUser", isVotedByUser);
+        result.put("category", category);
 
         return result;
     }

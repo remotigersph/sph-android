@@ -15,17 +15,30 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin">
 
-        <ImageView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            binding:imageUri="@{viewModel.photoUri}"/>
+            android:text="@{viewModel.location}"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:prompt="@string/category_prompt"
+            android:entries="@{viewModel.categoryArray}"
+            android:onItemSelectedListener="@{viewModel.onItemSelectedListener}"/>
 
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lines="5"
             android:hint="Whats happening in this post"
+            android:imeOptions="actionDone"
             android:onTextChanged="@{viewModel::onTextChanged}"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            binding:imageUri="@{viewModel.photoUri}"/>
 
         <Button
             android:layout_width="match_parent"

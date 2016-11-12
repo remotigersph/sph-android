@@ -15,23 +15,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone" />
-        <com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout
-            android:id="@+id/swipeRefreshLayout"
+        <android.support.design.widget.TabLayout
+            android:id="@+id/post_tabs"
+            style="@style/AppTabLayoutSecondary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/post_pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/backgroundPrimary"
-            app:onRefreshListener="@{viewModel::onRefresh}"
-            >
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/list"
-                android:name="pogi.tiger.com.sph.ui.fragment.PostFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/post_search"
-                app:layoutManager="android.support.v7.widget.GridLayoutManager"
-                app:spanCount="3"
-                app:adapter="@{viewModel.adapter}"
-                tools:listitem="@layout/fragment_post_item" />
-        </com.cleveroad.pulltorefresh.firework.FireworkyPullToRefreshLayout>
+            app:adapter="@{viewModel.adapter}"
+            android:layout_below="@+id/post_tabs"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
     </RelativeLayout>
 </layout>
